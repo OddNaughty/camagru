@@ -1,5 +1,6 @@
 <?php
 
-include_once("controllers/home.php");
+require_once("constant.php");
+require_once("controllers/home.php");
 
 ?>

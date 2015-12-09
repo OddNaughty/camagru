@@ -6,7 +6,7 @@
  * Time: 16:47
  */
 
-require_once ("db.php");
+require_once("models/db.php");
 
 class User {
 
@@ -33,7 +33,9 @@ class User {
                     id        INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                     pseudo    TEXT NOT NULL UNIQUE,
                     mail      TEXT NOT NULL UNIQUE,
-                    password  TEXT NOT NULL);");
+                    password  TEXT NOT NULL,
+                    token     TEXT NOT NULL,
+                    confirmed BOOL NOT NULL DEFAULT FALSE);");
     }
 
     public function getUsers() {
@@ -43,11 +45,40 @@ class User {
         return $users;
     }
 
-    public function createUser($username, $email, $password) {
+    public function getUserByName($pseudo) {
+        $req = $this->_dbh->prepare("SELECT * FROM users WHERE pseudo=\"$pseudo\"");
+        $req->execute();
+        return $req->fetch();
+    }
 
-        $req = $this->_dbh->prepare("INSERT OR IGNORE INTO users(pseudo, mail, password)
-                VALUES(?, ?, ?)");
-        $ret = $req->execute(array($username, $email, $password));
-        return $ret;
+    public function getUserByEmail($email) {
+        $req = $this->_dbh->prepare("SELECT * FROM users WHERE mail=\"$email\"");
+        $req->execute();
+        return $req->fetch();
+    }
+
+    public function createUser($username, $email, $password) {
+        $token = md5(uniqid($username, true));
+        $req = $this->_dbh->prepare("INSERT OR IGNORE INTO users(pseudo, mail, password, token)
+                VALUES(?, ?, ?, ?)");
+        $ret = $req->execute(array($username, $email, $password, $token));
+        if ($ret) {
+            $headers = "X-Sender: camagru_cwagner@camagru.fr\n";
+            $headers .= "From:<camagru_cwagner@camagru.fr>\n";
+            $headers .= "Reply-To: 'No reply'\n";
+            $headers .= "Content-Type: text/html; charset=\"iso-8859-1\n";
+            $link = "http://localhost:8000/controllers/login.php?username=".$username."&token=".$token;
+
+            if(mail($email, "Inscription à Camagru", "Bonjour, merci de vouloir suivre ce lien: \n".$link, $headers)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function activateUser($username, $token) {
+        $req = $this->_dbh->prepare("UPDATE users SET confirmed=\"TRUE\" WHERE username=? AND token=?");
+        $ret = $req->execute(array($username, $token));
+        return ($ret);
     }
 }

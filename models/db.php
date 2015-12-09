@@ -5,6 +5,7 @@
  * Date: 07/12/15
  * Time: 16:53
  */
+
 class Db
 {
     private $_connection;
@@ -24,13 +25,14 @@ class Db
     // Constructor
     private function __construct()
     {
+        require_once("config/database.php");
         try {
-            $sqlite = new PDO('sqlite:'.dirname(__FILE__).'/database.sqlite');
+            $sqlite = new PDO($DSN);
             $sqlite->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
             $sqlite->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // ERRMODE_WARNING | ERRMODE_EXCEPTION | ERRMODE_SILENT
             $this->_connection = $sqlite;
         } catch(Exception $e) {
-            echo "Impossible d'accéder à la base de données SQLite : ".$e->getMessage();
+            echo "Impossibru d'accéder à la base de données SQLite : ".$e->getMessage();
             die();
         }
     }

@@ -7,6 +7,7 @@
  */
 require_once("models/user.php");
 $User = User::getInstance();
-$users = $User->getUsers();
+$user = $User->getUserByName("test1");
+print_r($user);
 require_once("views/home.php");
 ?>
