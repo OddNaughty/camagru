@@ -1,0 +1,18 @@
+.wrapper {
+    height:100vh;
+    display:flex;
+    flex-direction: column;
+}
+
+header, footer {
+    height: 5%;
+}
+
+main {
+    flex:1;
+}
+
+body {margin:0}
+header {background-color:#2ecc71}
+main {background-color:#ecf0f1}
+footer {background-color:#2c3e50;color:white}
