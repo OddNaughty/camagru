@@ -1,3 +1,4 @@
+<script src="/js/gallery.js" type="application/javascript"></script>
 <?php
 /**
  * Created by PhpStorm.
@@ -15,9 +16,9 @@ require_once("header.php");
 foreach ($pictures as $picture) { ?>
     <div>
         <img src="<?php echo $picture['picture'] ?>">
-        <p>Likes: <?php echo $picture['likes'] ?></p>
+        <p>Likes: <?php echo $picture['likes'] ?></p><button onclick="postLike(<?php echo $user['id'].", ".$picture['id'] ?>)">Like !</button>
+        <p id="<?php echo "likeOk".$picture['id'] ?>"></p>
     </div>
 <?php }
 require_once("footer.php");
 ?>
-<script src="/js/gallery.js" type="application/javascript"></script>

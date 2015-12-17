@@ -12,6 +12,7 @@ require_once("models/picture.php");
 
 $Picture = Picture::getInstance();
 $pictures = $Picture->getPictures();
+$user = $_SESSION['user'];
 
 require_once("views/gallery.php");
 
