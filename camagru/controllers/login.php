@@ -29,10 +29,7 @@ if (!empty($_POST)) {
 //            $error['email'] = "Un utilisateur existe déjà avec cet email";
 //        }
         else {
-            $_SESSION['user'] = array(
-                "username" => $username,
-                "email" => $email
-            );
+            $_SESSION['user'] = $user;
             require_once("views/login_ok.php");
         }
         if (!empty($error))
