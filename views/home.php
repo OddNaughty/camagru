@@ -6,10 +6,10 @@
  * Time: 17:13
  */
 $title = "Home - Camagru";
-include_once("header.php"); ?>
+require_once ("header.php"); ?>
 <h3>Ceci est le home.</h3>
 <p>Pour vous enregistrer, merci d'aller <a href="/controllers/register.php">ici</a></p>
 <p>Pour vous connecter, merci d'aller <a href="/controllers/login.php">ici</a></p>
 <?php
-include_once("footer.php");
+require_once ("footer.php");
 ?>

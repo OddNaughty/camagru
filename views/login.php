@@ -15,4 +15,7 @@ require_once("header.php"); ?>
     <?php if (isset($error['password'])) echo '<p>'.$error['password'].'</p>' ?>
     <input type="submit" value="Log moi :D."/>
 </form>
+    <form action="/controllers/password_reset.php">
+        <input type="submit" value="J'ai perdu mon mdp tel un gros tard">
+    </form>
 <?php require_once("footer.php");?>

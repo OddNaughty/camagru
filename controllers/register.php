@@ -10,6 +10,7 @@ require_once("../constant.php");
 // GET POSTS FOR FORM
 require_once("models/user.php");
 if (!empty($_POST)) {
+    // On a rempli le formulaire
     if (isset($_POST['pseudo']) && isset($_POST['password']) && isset($_POST['email'])) {
         session_start();
         $username = htmlspecialchars($_POST['pseudo']);
@@ -26,18 +27,17 @@ if (!empty($_POST)) {
         if (!empty($user->getUserByEmail($email))) {
             $error['email'] = "Un utilisateur existe déjà avec cet email";
         }
-        else {
-            $user->createUser($username, $email, $password);
-            $_SESSION['user'] = array(
-                "username" => $username,
-                "email" => $email
-            );
-            require_once("views/registration_ok.php");
-        }
+
         if (!empty($error))
             require_once("views/register.php");
+        else {
+            $user->createUser($username, $email, $password);
+            require_once("views/registration_ok.php");
+        }
     }
-} elseif (!empty($_GET) && isset($_GET['token']) && isset($_GET['username'])) {
+}
+// On a pas rempli le formulaire ==> lien de reset
+elseif (!empty($_GET) && isset($_GET['token']) && isset($_GET['username'])) {
     $confirmed = false;
     $user = User::getInstance();
     if ($user->activateUser($_GET['username'], $_GET['token'])) {
@@ -45,6 +45,7 @@ if (!empty($_POST)) {
     }
     require_once("views/register_confirmation.php");
 }
+// Rien du tout, on load le truc normal
 else {
     require_once("views/register.php");
 }

@@ -1,2 +1,2 @@
-<p>Login ok :D.</p>
-<p>Bienvenue <?php echo $_SESSION['user']['username'] ?></p>
+<?php header( "refresh:2;url=/index.php" ); ?>
+<p>Inscription ok, merci d'aller sur votre boite mail pour pouvoir etre véritablement inscrit !</p>

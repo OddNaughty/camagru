@@ -10,5 +10,6 @@ if ($confirmed) {
 } else {
     $html = "Un ennui a eu lieu à la confirmation...";
 }
+header( "refresh:2;url=/controllers/login.php" );
 echo $html;
 ?>

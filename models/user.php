@@ -34,10 +34,9 @@ class User {
                     pseudo    TEXT NOT NULL UNIQUE,
                     mail      TEXT NOT NULL UNIQUE,
                     password  TEXT NOT NULL,
-                    token     TEXT NOT NULL,
-                    likes_id     INTEGER NOT NULL DEFAULT 0,
-                    confirmed BOOL NOT NULL DEFAULT FALSE,
-                    FOREIGN KEY (likes_id) REFERENCES pictures(id));");
+                    token     TEXT NOT NULL UNIQUE,
+                    confirmed BOOL NOT NULL DEFAULT FALSE);");
+//                    FOREIGN KEY (likes_id) REFERENCES pictures(id));");
     }
 
     public function getUsers() {
@@ -59,6 +58,18 @@ class User {
         return $req->fetch();
     }
 
+    public function sendResetPassword($email) {
+        $headers = "X-Sender: camagru_cwagner@camagru.fr\n";
+        $headers .= "From:<camagru_cwagner@camagru.fr>\n";
+        $headers .= "Reply-To: 'No reply'\n";
+        $headers .= "Content-Type: text/html; charset=\"iso-8859-1\n";
+        $link = "http://" . $_SERVER['HTTP_HOST'] . "/controllers/password_reset.php?email=".$email;
+
+        if(mail($email, "Camagru - Passoword Reset", "Bonjour, merci de vouloir suivre ce lien pour enregistrer un nouveau mot de passe: \n".$link, $headers))
+            return true;
+        return false;
+    }
+
     public function createUser($username, $email, $password) {
         $token = md5(uniqid($username, true));
         $req = $this->_dbh->prepare("INSERT OR IGNORE INTO users(pseudo, mail, password, token)
@@ -69,7 +80,7 @@ class User {
             $headers .= "From:<camagru_cwagner@camagru.fr>\n";
             $headers .= "Reply-To: 'No reply'\n";
             $headers .= "Content-Type: text/html; charset=\"iso-8859-1\n";
-            $link = "http://localhost:8000/controllers/register.php?username=".$username."&token=".$token;
+            $link = "http://" . $_SERVER['HTTP_HOST'] . "/controllers/register.php?username=".$username."&token=".$token;
 
             if(mail($email, "Inscription à Camagru", "Bonjour, merci de vouloir suivre ce lien: \n".$link, $headers)){
                 return true;

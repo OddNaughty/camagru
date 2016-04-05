@@ -25,23 +25,12 @@ if (!empty($_POST)) {
         else if ($user['password'] !== $password) {
             $error['password'] = "Le mot de passe rentré n'est pas le bon";
         }
-//        if (!empty($user->getUserByEmail($email))) {
-//            $error['email'] = "Un utilisateur existe déjà avec cet email";
-//        }
+        if (!empty($error))
+            require_once("views/login.php");
         else {
             $_SESSION['user'] = $user;
             require_once("views/login_ok.php");
         }
-        if (!empty($error))
-            require_once("views/login.php");
-//    }
-//} elseif (!empty($_GET) && isset($_GET['token']) && isset($_GET['username'])) {
-//    $confirmed = false;
-//    $user = User::getInstance();
-//    if ($user->activateUser($_GET['username'], $_GET['token'])) {
-//        $confirmed = true;
-//    }
-//    require_once("views/register_confirmation.php");
     }
 }
 else {

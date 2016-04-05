@@ -9,7 +9,7 @@
 <body>
 <div class="wrapper">
     <header>
-        <?php;
+        <?php
         if (!isset($_SESSION['user'])) { ?>
             <ul>
                 <li style="display: inline;"><a href="/controllers/login.php">connexion</a></li>
@@ -21,7 +21,7 @@
                 <a href="/controllers/gallery.php">Regarde les photos !</a>
                 <a href="/controllers/logout.php">Déconnecte moi !</a>
             </div>
-            <?php }?>
+            <?php } ?>
     </header>
     <main>
 <!--Must finish class=wrapper in footer-->
