@@ -7,10 +7,11 @@
         cover        = document.querySelector('#cover'),
         canvas       = document.getElementById('canvas'),
         overlay      = document.getElementById('overlay'),
-        joint        = document.querySelector('#joint'),
+        items        = [document.querySelector('#joint'), document.querySelector('#grumpy'), document.querySelector('#luigi')],
         startbutton  = document.querySelector('#startbutton'),
         form         = document.querySelector('form'),
-        formInput    = document.querySelector('input[name="photo64"]'),
+        formInputPhoto = document.querySelector('input[name="photo64"]'),
+        formInputOverlay = document.querySelector('input[name="overlay64"]'),
         reset = null,
         taken = false,
         width = 200,
@@ -21,12 +22,9 @@
     navigator.webkitGetUserMedia ||
     navigator.mozGetUserMedia ||
     navigator.msGetUserMedia);
-
     var video_coos = video.getBoundingClientRect();
     overlay.style.left = video_coos.left +"px";
     overlay.style.top = video_coos.top +"px";
-
-
     navigator.getMedia(
         // cosntraints
         {
@@ -49,6 +47,16 @@
         }
     );
 
+    // Make draggable you know
+    items.forEach(function (elem) {
+        elem.addEventListener('dragstart', function(e){
+            e.dataTransfer.setDragImage(elem, 0, 0);
+            beingDragged = elem;
+        }, false);
+    });
+
+
+
     video.addEventListener('canplay', function(ev){
         if (!streaming) {
             height = video.videoHeight / (video.videoWidth/width);
@@ -66,20 +74,16 @@
     }, false);
 
     overlay.addEventListener('drop', function (ev) {
-        console.log(ev);
-        console.log(ev.offsetX);
-        console.log(ev.offsetY);
+        // console.log(ev);
+        // console.log(ev.offsetX);
+        // console.log(ev.offsetY);
         overlay.getContext('2d').drawImage(beingDragged, ev.offsetX, ev.offsetY);
         createResetButton();
+        startbutton.disabled = false;
     }, false);
 
     overlay.addEventListener('dragover', function (ev) {
         ev.preventDefault();
-    }, false);
-
-    joint.addEventListener('dragstart', function(e){
-        e.dataTransfer.setDragImage(joint, 0, 0);
-        beingDragged = joint;
     }, false);
 
     document.body.addEventListener('drop', function(ev) {
@@ -106,7 +110,8 @@
         submit.type = 'submit';
         submit.value = "Enregistrer la photo";
         form.appendChild(submit);
-        formInput.value = canvas.toDataURL('image/png');
+        formInputPhoto.value = canvas.toDataURL('image/png');
+        formInputOverlay.value = overlay.toDataURL('image/png');
     }
 
     function takepicture() {
@@ -114,7 +119,6 @@
         canvas.height = height;
         canvas.getContext('2d').drawImage(video, 0, 0, width, height);
         canvas.getContext('2d').drawImage(overlay, 0, 0);
-        console.log(canvas.toDataURL());
         if (!taken) {
             createSubmit();
             taken = true;

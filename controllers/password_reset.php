@@ -14,16 +14,25 @@ if (!empty($_POST)) {
         $user = $User->getUserByEmail($_POST['email']);
         $error = array();
         if (!$user) {
-            $error['pseudo'] = "Aucun utilisateur n'existe avec cet email";
+            $error['email'] = "Aucun utilisateur n'existe avec cet email";
         }
         if (!empty($error))
-            require_once("views/login.php");
+            require_once("views/password_reset.php");
         else {
-            $User->sendResetPassword($_POST['email']);
-            require_once("views/login_ok.php");
+            $User->sendResetMail($user);
+            require_once("views/password_reset_mail.php");
         }
     }
 }
+elseif (!empty($_GET)) {
+    if (isset($_GET['t'])) {
+        $User = User::getInstance();
+        $pwd = $User->resetPassword($_GET['t']);
+        require_once("views/password_reset_ok.php");
+    }
+    else
+        require_once("views/login.php");
+}
 else {
-    require_once("views/login.php");
+    require_once("views/password_reset.php");
 }?>

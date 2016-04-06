@@ -13,11 +13,15 @@ include_once("header.php");?>
 <div id="form">
     <form method="post" action="/controllers/editing.php">
         <input type="hidden" name="photo64" value="">
+        <input type="hidden" name="overlay64" value="">
     </form>
 </div>
     <br/>
-<button id="startbutton">Prendre une photo</button>
+<button id="startbutton" disabled>Prendre une photo</button>
+<input type="file" id="files" />
 <image id="joint" src="/assets/joint.png" draggable="true"></image>
+<image id="grumpy" src="/assets/grumpy_cat.png" draggable="true"></image>
+<image id="luigi" src="/assets/luigi.png" draggable="true"></image>
 <script src="/js/camagru.js" type="application/javascript"></script>
 <?php
 include_once("footer.php");
