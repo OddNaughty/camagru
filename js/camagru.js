@@ -12,11 +12,13 @@
         form         = document.querySelector('form'),
         formInputPhoto = document.querySelector('input[name="photo64"]'),
         formInputOverlay = document.querySelector('input[name="overlay64"]'),
+        imageFile = document.querySelector('#image'),
         reset = null,
         taken = false,
         width = 200,
         height = 0,
-        beingDragged = null;
+        beingDragged = null,
+        fileInput = false;
 
     navigator.getMedia = ( navigator.getUserMedia ||
     navigator.webkitGetUserMedia ||
@@ -55,7 +57,28 @@
         }, false);
     });
 
-
+    // For file Input you know
+    document.getElementById("files").onchange = function () {
+        if (!this.files[0].name.match(/\.(jpg|jpeg|png|gif)$/))
+            alert('Ths file is not an image, go fuck yourself :D.');
+        else {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                // get loaded data and render thumbnail.
+                imageFile.src = e.target.result;
+                var imgCoos = imageFile.getBoundingClientRect();
+                overlay.setAttribute('width', imgCoos.width);
+                overlay.setAttribute('height', imgCoos.height);
+                overlay.style.left = imgCoos.left +"px";
+                overlay.style.top = imgCoos.top +"px";
+                fileInput = true;
+                width = imgCoos.width;
+                height = imgCoos.height;
+            };
+            // read the image file as a data URL.
+            reader.readAsDataURL(this.files[0]);
+        }
+    };
 
     video.addEventListener('canplay', function(ev){
         if (!streaming) {
@@ -87,7 +110,6 @@
     }, false);
 
     document.body.addEventListener('drop', function(ev) {
-        console.log('skbf');
     }, false);
 
     function resetpicture() {
@@ -115,14 +137,18 @@
     }
 
     function takepicture() {
-        canvas.width = width;
-        canvas.height = height;
-        canvas.getContext('2d').drawImage(video, 0, 0, width, height);
-        canvas.getContext('2d').drawImage(overlay, 0, 0);
         if (!taken) {
             createSubmit();
             taken = true;
         }
+        canvas.width = width;
+        canvas.height = height;
+        if (!fileInput)
+            canvas.getContext('2d').drawImage(video, 0, 0, width, height);
+        else
+            canvas.getContext('2d').drawImage(imageFile, 0, 0, width, height);
+        canvas.getContext('2d').drawImage(overlay, 0, 0);
+        resetpicture();
     }
 
     startbutton.addEventListener('click', function(ev){

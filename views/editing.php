@@ -7,7 +7,7 @@
  */
 $title = "Home - Camagru";
 include_once("header.php");?>
-<video id="video" ></video>
+<video id="video"></video>
 <canvas id="overlay" style="position: absolute; z-index: 10;"></canvas>
 <canvas id="canvas" style="border:1px solid #000000;"></canvas>
 <div id="form">
@@ -18,7 +18,7 @@ include_once("header.php");?>
 </div>
     <br/>
 <button id="startbutton" disabled>Prendre une photo</button>
-<input type="file" id="files" />
+<input type="file" id="files" /><img id="image" />
 <image id="joint" src="/assets/joint.png" draggable="true"></image>
 <image id="grumpy" src="/assets/grumpy_cat.png" draggable="true"></image>
 <image id="luigi" src="/assets/luigi.png" draggable="true"></image>
