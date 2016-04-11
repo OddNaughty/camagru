@@ -22,6 +22,13 @@ include_once("header.php");?>
 <image id="joint" src="/assets/joint.png" draggable="true"></image>
 <image id="grumpy" src="/assets/grumpy_cat.png" draggable="true"></image>
 <image id="luigi" src="/assets/luigi.png" draggable="true"></image>
+<?php if ($pictures) {
+    foreach ($pictures as $p) {
+        var_dump($p);
+        echo ("<p><img src='".$p['picture']."'/></p>");
+    }
+}
+?>
 <script src="/js/camagru.js" type="application/javascript"></script>
 <?php
 include_once("footer.php");

@@ -44,6 +44,12 @@ class Picture {
         return $req->fetchAll();
     }
 
+    public function getPicturesFromUser($userId) {
+        $req = $this->_dbh->prepare("SELECT pictures.picture FROM pictures WHERE pictures.user_id = ?");
+        $req->execute(array($userId));
+        return $req->fetchAll();
+    }
+
     public function createPicture($user, $picture) {
         $req = $this->_dbh->prepare("INSERT INTO pictures(picture, user_id) VALUES(?, ?)");
         $ret = $req->execute(array($picture, $user));

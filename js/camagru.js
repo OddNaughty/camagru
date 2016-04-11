@@ -110,10 +110,12 @@
     }, false);
 
     document.body.addEventListener('drop', function(ev) {
+        ev.preventDefault();
     }, false);
 
     function resetpicture() {
         overlay.getContext('2d').clearRect(0, 0, overlay.width, overlay.height);
+        startbutton.disabled = true;
     }
 
     function createResetButton() {
@@ -132,8 +134,7 @@
         submit.type = 'submit';
         submit.value = "Enregistrer la photo";
         form.appendChild(submit);
-        formInputPhoto.value = canvas.toDataURL('image/png');
-        formInputOverlay.value = overlay.toDataURL('image/png');
+        startbutton.disabled = true;
     }
 
     function takepicture() {
@@ -148,6 +149,8 @@
         else
             canvas.getContext('2d').drawImage(imageFile, 0, 0, width, height);
         canvas.getContext('2d').drawImage(overlay, 0, 0);
+        formInputPhoto.value = canvas.toDataURL('image/png');
+        formInputOverlay.value = overlay.toDataURL('image/png');
         resetpicture();
     }
 
