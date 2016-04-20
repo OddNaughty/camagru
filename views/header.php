@@ -1,7 +1,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title><?php echo $title; ?></title>
+<!--    <title>--><?php //echo $title; ?><!--</title>-->
     <link rel="stylesheet" href="/css/main.css"/>
 <!--    <link rel="stylesheet" href="../vue/style.css" />-->
 </head>

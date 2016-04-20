@@ -13,8 +13,8 @@ if (!isset($_SESSION['user'])) {
 require_once("models/picture.php");
 $Picture = Picture::getInstance();
 $pictures = false;
-if (!empty($_POST) && isset($_POST['photo64'])) {
-    $ret = $Picture->createPicture($_SESSION['user']['id'], $_POST['photo64']);
+if (!empty($_POST) && isset($_POST['photo64']) && isset($_POST['overlay64'])) {
+    $ret = $Picture->createPicture($_SESSION['user']['id'], $_POST['photo64'], $_POST['overlay64']);
 }
 $pictures = $Picture->getPicturesFromUser($_SESSION['user']['id']);
 require_once("views/editing.php");

@@ -22,7 +22,7 @@ if (!empty($_POST)) {
         if (strlen($_POST['password']) < 5) {
             $error['password'] = "Le mot de passe rentré est trop court";
         }
-        else if ($user['password'] !== $password) {
+        else if ($user && ($user['password'] !== $password)) {
             $error['password'] = "Le mot de passe rentré n'est pas le bon";
         }
         if (!empty($error))

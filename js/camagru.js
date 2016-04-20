@@ -148,9 +148,9 @@
             canvas.getContext('2d').drawImage(video, 0, 0, width, height);
         else
             canvas.getContext('2d').drawImage(imageFile, 0, 0, width, height);
-        canvas.getContext('2d').drawImage(overlay, 0, 0);
         formInputPhoto.value = canvas.toDataURL('image/png');
         formInputOverlay.value = overlay.toDataURL('image/png');
+        canvas.getContext('2d').drawImage(overlay, 0, 0);
         resetpicture();
     }
 

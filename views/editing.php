@@ -24,7 +24,6 @@ include_once("header.php");?>
 <image id="luigi" src="/assets/luigi.png" draggable="true"></image>
 <?php if ($pictures) {
     foreach ($pictures as $p) {
-        var_dump($p);
         echo ("<p><img src='".$p['picture']."'/></p>");
     }
 }
