@@ -51,15 +51,12 @@ class Picture {
     }
 
     public function createPicture($user, $picture, $overlay) {
-        print($overlay);
         $im1 = imagecreatefromstring(base64_decode(substr($picture, 22)));
         imagecopy($im1, imagecreatefromstring(base64_decode(substr($overlay, 22))), 0, 0, 0, 0, 200, 150);
-//        imagecopymerge($im1, imagecreatefromstring(base64_decode(substr($picture, 22))), 0, 0, 0, 0, 200, 150, 50);
         ob_start();
         imagepng($im1);
         $contents =  ob_get_contents();
         ob_end_clean();
-//        echo "<img src='data:image/png;base64,".base64_encode($contents)."' />";
         imagedestroy($im1);
         $req = $this->_dbh->prepare("INSERT INTO pictures(picture, user_id) VALUES(?, ?)");
         $ret = $req->execute(array("data:image/png;base64,".base64_encode($contents), $user));

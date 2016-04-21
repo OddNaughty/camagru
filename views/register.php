@@ -16,6 +16,6 @@ require_once("header.php"); ?>
     Email:<br>
     <input type="email" name="email" required><br>
     <?php if (isset($error['email'])) echo '<p>'.$error['email'].'</p>' ?>
-    <input type="submit" value="Log moi :D."/>
+    <input type="submit" value="Inscris moi :D."/>
 </form>
 <?php require_once("footer.php");?>
