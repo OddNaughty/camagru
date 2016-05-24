@@ -5,11 +5,12 @@
 (function () {
 })();
 
-function postLike(idUser, idPicture) {
+function postLike(idPicture) {
     xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-            document.getElementById("likeOk"+idPicture).innerHTML = xmlhttp.responseText;
+            console.log(document.getElementById("nblikes"+idPicture).innerHTML.split(":"));
+            document.getElementById("nblikes"+idPicture).innerHTML = "Likes: " + (parseInt(document.getElementById("nblikes"+idPicture).innerHTML.split(":")[1]) + 1);
         }
     };
     xmlhttp.open("GET","/controllers/likephoto.php?p="+idPicture, true);

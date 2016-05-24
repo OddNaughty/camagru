@@ -16,8 +16,8 @@ require_once("header.php");
 foreach ($pictures as $picture) { ?>
     <div>
         <img src="<?php echo $picture['picture'] ?>">
-        <p>Likes: <?php echo $picture['likes'] ?></p><button onclick="postLike(<?php echo $user['id'].", ".$picture['id'] ?>)">Like !</button>
-        <p id="<?php echo "likeOk".$picture['id'] ?>"></p>
+        <p id="<?php echo "nblikes".$picture['id'] ?>">Likes: <?php echo $picture['nb_likes'] ?><button onclick="postLike(<?php echo $picture['id'] ?>)">Like !</button></p>
+<!--        <p id="--><?php //echo "likeOk".$picture['id'] ?><!--"></p>-->
     </div>
 <?php }
 require_once("footer.php");

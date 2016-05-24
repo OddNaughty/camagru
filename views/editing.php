@@ -24,7 +24,7 @@ include_once("header.php");?>
 <image id="luigi" src="/assets/luigi.png" draggable="true"></image>
 <?php if ($pictures) {
     foreach ($pictures as $p) {
-        echo ("<p><img src='".$p['picture']."'/></p>");
+        echo ("<p id='picture'".$p['id']."><img src='".$p['picture']."'/><button onclick='deletePicture(".$p['id'].")/></p>");
     }
 }
 ?>

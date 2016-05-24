@@ -39,7 +39,8 @@ class Picture {
     }
 
     public function getPictures() {
-        $req = $this->_dbh->prepare("SELECT pictures.picture, likes.like FROM pictures, likes WHERE pictures.id = likes.picture_id");
+//        $req = $this->_dbh->prepare("SELECT pictures.picture FROM pictures ORDER BY datetime(pictures.creation_time) DESC");
+        $req = $this->_dbh->prepare("SELECT pictures.picture, pictures.id, (SELECT COUNT(*) FROM likes WHERE likes.picture_id = pictures.id) AS nb_likes FROM pictures");
         $req->execute();
         return $req->fetchAll();
     }

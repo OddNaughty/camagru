@@ -22,16 +22,16 @@
 set_include_path(__DIR__."/..");
 
 //require_once("models/comment.php");
-//require_once("models/db.php");
-//require_once("models/like.php");
-//require_once("models/picture.php");
+require_once("models/db.php");
+require_once("models/like.php");
+require_once("models/picture.php");
 require_once("models/user.php");
 
 
 //Comment::getInstance();
-//Db::getInstance();
-//Like::getInstance();
-//Picture::getInstance();
+Db::getInstance();
+Like::getInstance();
+Picture::getInstance();
 User::getInstance();
 
 
