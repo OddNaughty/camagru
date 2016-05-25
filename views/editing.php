@@ -23,9 +23,9 @@ include_once("header.php");?>
 <image id="grumpy" src="/assets/grumpy_cat.png" draggable="true"></image>
 <image id="luigi" src="/assets/luigi.png" draggable="true"></image>
 <?php if ($pictures) {
-    foreach ($pictures as $p) {
-        echo ("<p id='picture'".$p['id']."><img src='".$p['picture']."'/><button onclick='deletePicture(".$p['id'].")/></p>");
-    }
+    foreach ($pictures as $p) { ?>
+       <p id='picture<?php echo $p['id'] ?>'><img src='<?php echo $p['picture'] ?>'/><button onclick="deletePicture(<?php echo $p['id'] ?>)">Delete</button></p>
+    <?php }
 }
 ?>
 <script src="/js/camagru.js" type="application/javascript"></script>

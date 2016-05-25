@@ -46,7 +46,7 @@ class Picture {
     }
 
     public function getPicturesFromUser($userId) {
-        $req = $this->_dbh->prepare("SELECT pictures.picture FROM pictures WHERE pictures.user_id = ? ORDER BY datetime(pictures.creation_time) DESC");
+        $req = $this->_dbh->prepare("SELECT pictures.picture, pictures.id FROM pictures WHERE pictures.user_id = ? ORDER BY datetime(pictures.creation_time) DESC");
         $req->execute(array($userId));
         return $req->fetchAll();
     }
@@ -62,6 +62,13 @@ class Picture {
         $req = $this->_dbh->prepare("INSERT INTO pictures(picture, user_id) VALUES(?, ?)");
         $ret = $req->execute(array("data:image/png;base64,".base64_encode($contents), $user));
         return $ret;
+    }
+
+    public function deletePicture($userId, $pictureId) {
+        if ($userId == $_SESSION['user']['id']) {
+            $req = $this->_dbh->prepare("DELETE FROM pictures WHERE id = ? AND user_id = ?");
+            $req->execute(array($pictureId, $userId));
+        }
     }
 
 }

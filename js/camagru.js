@@ -158,4 +158,20 @@
         takepicture();
         ev.preventDefault();
     }, false);
+
+
+
 })();
+
+function deletePicture(id) {
+    var picture = document.getElementById("picture" + id);
+    console.log(picture);
+    xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            picture.remove();
+        }
+    };
+    xmlhttp.open("GET","/controllers/deletephoto.php?p="+id, true);
+    xmlhttp.send();
+}

@@ -17,8 +17,8 @@ foreach ($pictures as $picture) { ?>
     <div>
         <img src="<?php echo $picture['picture'] ?>">
         <p id="<?php echo "nblikes".$picture['id'] ?>">Likes: <?php echo $picture['nb_likes'] ?><button onclick="postLike(<?php echo $picture['id'] ?>)">Like !</button></p>
-<!--        <p id="--><?php //echo "likeOk".$picture['id'] ?><!--"></p>-->
     </div>
-<?php }
-require_once("footer.php");
-?>
+<?php } ?>
+<a href="/controllers/gallery.php?p=<?php echo ($page + 1) ?>">Page suivante</a>
+<a href="/controllers/gallery.php?p=<?php echo ($page - 1) ?>">Page précédente</a>
+<?php require_once("footer.php"); ?>
