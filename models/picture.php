@@ -51,6 +51,12 @@ class Picture {
         return $req->fetchAll();
     }
 
+    public function getPictureFromId($pictureId) {
+        $req = $this->_dbh->prepare("SELECT pictures.picture, pictures.id, (SELECT COUNT(*) FROM likes WHERE likes.picture_id = ?) AS nb_likes FROM pictures WHERE pictures.id = ?");
+        $req->execute(array($pictureId, $pictureId));
+        return $req->fetch();
+    }
+
     public function createPicture($user, $picture, $overlay) {
         $im1 = imagecreatefromstring(base64_decode(substr($picture, 22)));
         imagecopy($im1, imagecreatefromstring(base64_decode(substr($overlay, 22))), 0, 0, 0, 0, 200, 150);

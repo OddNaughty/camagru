@@ -10,6 +10,7 @@ require_once("../constant.php");
 require_once("models/like.php");
 
 $Like = Like::getInstance();
-$Like->like($_SESSION['user']['id'], intval($_GET['p']));
+if (isset($_SESSION['user']) && isset($_SESSION['user']['id']))
+    $Like->like($_SESSION['user']['id'], intval($_GET['p']));
 
 ?>

@@ -15,7 +15,7 @@ require_once("header.php");
 <?php
 foreach ($pictures as $picture) { ?>
     <div>
-        <img src="<?php echo $picture['picture'] ?>">
+        <a href="/controllers/picture.php?p=<?php echo $picture['id'] ?>"><img src="<?php echo $picture['picture'] ?>"/></a>
         <p id="<?php echo "nblikes".$picture['id'] ?>">Likes: <?php echo $picture['nb_likes'] ?><button onclick="postLike(<?php echo $picture['id'] ?>)">Like !</button></p>
     </div>
 <?php } ?>

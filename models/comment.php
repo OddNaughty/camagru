@@ -46,9 +46,30 @@ class Comment {
         return $req->fetchAll();
     }
 
+    public function getCommentsFromPicture($pictureId) {
+        $req = $this->_dbh->prepare("SELECT comment FROM comments WHERE picture_id = ?");
+        $req->execute(array($pictureId));
+        return $req->fetchAll();
+    }
+
     public function createComment($comment, $user_id, $picture_id) {
         $req = $this->_dbh->prepare("INSERT INTO comments(comment, picture_id, user_id) VALUES(?, ?, ?)");
         $ret = $req->execute(array($comment, $picture_id, $user_id));
+        if ($ret) {
+            $picture = $this->_dbh->prepare("SELECT user_id FROM pictures WHERE pictures.id = ?");
+            $picture->execute(array($picture_id));
+            $pic = $picture->fetch();
+            $user = $this->_dbh->prepare("SELECT users.mail FROM users WHERE users.id = ?");
+            $user->execute(array($pic['user_id']));
+            $mail = $user->fetch()['mail'];
+            $headers = "X-Sender: camagru_cwagner@camagru.fr\n";
+            $headers .= "From:<camagru_cwagner@camagru.fr>\n";
+            $headers .= "Reply-To: 'No reply'\n";
+            $headers .= "Content-Type: text/html; charset=\"iso-8859-1\n";
+            if(mail($mail, "Camagru - Nouveau commentaire", "Bonjour, un commentaire a été posté sur votre photo", $headers))
+                return true;
+            return false;
+        }
         return $ret;
     }
 }
